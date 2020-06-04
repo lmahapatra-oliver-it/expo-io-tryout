@@ -3,8 +3,8 @@ import { Image, StyleSheet, Text, View, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker'
 import * as ImageSharing from 'expo-sharing'
 import uploadToAnonymousFilesAsync from 'anonymous-files'
-import logo from '../assets/logo.png'
-import Button from './Button'
+import logo from './assets/logo.png'
+import Button from './src/components/Button'
 
 interface AppProps {
 	localUri: string,
