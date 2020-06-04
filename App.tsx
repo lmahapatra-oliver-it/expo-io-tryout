@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, StyleSheet, Text, View, Platform } from 'react-native';
+import { Image, StyleSheet, Text, View, Platform, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker'
 import * as ImageSharing from 'expo-sharing'
 import uploadToAnonymousFilesAsync from 'anonymous-files'
@@ -17,7 +17,7 @@ const App: React.FC<AppProps> = ({ localUri, remoteUri }) => {
 	const openImagePickerAsync = async (): Promise<void> => {
 		const permissionResult = await ImagePicker.requestCameraRollPermissionsAsync()
 		if (permissionResult.granted === false) {
-			alert('Permission to access camera roll is required')
+			showAlert('Permission to access camera roll is required')
 			return
 		}
 		const pickerResult = await ImagePicker.launchImageLibraryAsync()
@@ -50,6 +50,16 @@ const App: React.FC<AppProps> = ({ localUri, remoteUri }) => {
 	let imageEl = (<Image source={logo} style={styles.logo}/>)
 	if (selectedImage) {
 		imageEl = (<Image source={{ uri: selectedImage }} style={styles.thumbnail} />)
+	}
+
+	const showAlert = (text: string, onPress?: () => void): void => {
+		Alert.alert(
+			'Alert',
+			text,
+			[
+				{ text: 'OK', onPress }
+			]
+		)
 	}
 
   return (
@@ -122,18 +132,14 @@ const styles = StyleSheet.create({
 	button: {
 		...buttonStyles
 	},
-	buttonText: {
-		fontSize: 20,
-		color: '#fff'
+	iconButton: {
+		position: 'relative',
+		top: 20
 	},
 	shareAndNavContainer: {
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-between'
-	},
-	iconButton: {
-		position: 'relative',
-		top: 20
 	}
 })
 
